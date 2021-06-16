@@ -1,0 +1,321 @@
+/*
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+*/
+
+* {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin: 20px 0;
+	background: #C5E6EE;
+	font: normal small Georgia, "Times New Roman", Times, serif;
+	color: #40ACC7;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+h2 {
+}
+
+h3 {
+}
+
+p, blockquote, ul, ol {
+	margin-bottom: 1.5em;
+	text-align: justify;
+}
+
+p {
+}
+
+blockquote {
+	margin-left: 3em;
+}
+
+ul {
+	margin-left: 3em;
+}
+
+ul li {
+}
+
+ol {
+	margin-left: 3em;
+}
+
+ol li {
+}
+
+a {
+	color: #FF7700;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+img {
+}
+
+/* Boxed Style */
+
+.boxed {
+}
+
+.boxed .title {
+	padding: 5px 0 5px 20px;
+	background: #FBC25F url(images/img06.gif) no-repeat;
+	font-size: 1em;
+	font-weight: bold;
+	color: #600303;
+}
+
+.boxed .content {
+	padding: 20px;
+}
+
+/* Post */
+
+.post {
+	padding: 20px;
+}
+
+.post .title {
+	float: right;
+	width: 395px;
+	padding: 5px 0;
+	font-size: 2em;
+}
+
+.post .date {
+	float: left;
+	width: 60px;
+	height: 70px;
+	background: #D9EEF4 url(images/img07.gif) no-repeat;
+	text-align: center;
+}
+
+.post .date .month {
+	display: block;
+	padding-top: 6px;
+	font-size: .8em;
+}
+
+.post .date .day {
+	display: block;
+	font-size: 2em;
+}
+
+.post .date .year {
+	display: none;
+}
+
+.post .meta {
+	margin: 0 0 20px 70px;
+	font-size: x-small;
+}
+
+.post .meta p {
+}
+
+.post .story {
+}
+
+.post .story p, .post .story blockquote, .post .story ul, .post .story ol {
+	line-height: 180%;
+}
+
+/* Breadcrumb */
+
+#breadcrumb {
+	width: 715px;
+	height: 30px;
+	margin: 0 auto;
+	padding: 15px 0 0 25px;
+	background: #40ACC7 url(images/img01.gif) no-repeat;
+	color: #FFFFFF;
+}
+
+/* Logo */
+
+#logo {
+	height: 180px;
+	background: #FBC25F url(images/img02.gif) no-repeat;
+	text-align: center;
+}
+
+#logo h1 {
+	padding-top: 60px;
+	font-size: 2.6em;
+	font-weight: bold;
+}
+
+#logo h2 {
+	font-size: .8em;
+}
+
+#logo a {
+	text-transform: uppercase;
+	text-decoration: none;
+	color: #600303;
+}
+
+/* Content */
+
+#content {
+	width: 730px;
+	margin: 0 auto;
+	background: #FFFFFF url(images/img03.gif) repeat-y 220px 0;
+	border: 5px solid #40ACC7;
+}
+
+#extra {
+}
+
+/* Content > Main */
+
+#main {
+	float: right;
+	width: 505px;
+}
+
+#main a {
+}
+
+/* Content > Main > Welcome */
+
+#welcome {
+}
+
+/* Content > Main > Example */
+
+#example {
+}
+
+/* Content > Sidebar */
+
+#sidebar {
+	float: left;
+	width: 220px;
+	background: url(images/img04.gif) no-repeat;
+}
+
+#sidebar a {
+}
+
+/* Content > Sidebar > Login */
+
+#login {
+}
+
+#login form {
+}
+
+#login fieldset {
+	border: none;
+}
+
+#login legend {
+	display: none;
+}
+
+#login label {
+	font-size: x-small;
+	font-weight: bold;
+}
+
+#login input {
+	margin-bottom: 5px;
+	padding: 2px 5px;
+	border: 1px solid #40ACC7;
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+}
+
+#inputtext1, #inputtext2 {
+	color: #40ACC7;
+}
+
+#inputsubmit1 {
+	background: #40ACC7;
+	color: #FFFFFF;
+}
+
+/* Content > Sidebar > Menu */
+
+#menu {
+	padding: 20px;
+	border-top: 5px solid #40ACC7;
+}
+
+#menu ul {
+	margin: 0;
+	list-style: none;
+}
+
+#menu li {
+	display: inline;
+}
+
+#menu a {
+	display: block;
+	padding: 7px 15px;
+	background: url(images/img04.gif) no-repeat left center;
+	text-decoration: none;
+	text-transform: uppercase;
+	color: #40ACC7;
+}
+
+#menu a:hover, #menu .active a {
+	background-image: url(images/img05.gif);
+	color: #FF7700;
+}
+
+/* Content > Sidebar > Updates*/
+
+#updates {
+}
+
+#updates ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+#updates h3 {
+	font-size: small;
+}
+
+#updates p {
+	font-size: x-small;
+}
+
+/* Footer */
+
+#footer {
+	clear: both;
+	width: 700px;
+	margin: 0 auto;
+	padding: 10px 0;
+}
+
+#footer p {
+	margin: 0;
+	text-align: right;
+	font-size: x-small;
+}
+
+/* Footer > Legal */
+
+#legal {
+}
+
+/* Footer > Links */
+
+#links {
+}

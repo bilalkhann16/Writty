@@ -1,3 +1,5 @@
+from operator import le
+from os import replace
 from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
@@ -34,31 +36,35 @@ class users(db.Model):
 
 @app.route('/')
 def index():
-    return '<a href="/signup"><button> Click here </button></a>'
+    return render_template('index1.html')
+    #return '<a href="/signup"><button> Click here </button></a>'
 
 @app.route("/signup", methods=['POST','GET'])
 def addperson():
-    return render_template("index.html")
+    return render_template("signup1.html")
 
 @app.route("/signup-done", methods=['POST'])
 def personadd():
-    print ('\n\n call here \n\n')
-    user_name = request.form["user_name"]
-    first_name = request.form["first_name"]
-    password = request.form["password"]
-    print (user_name,first_name,password)
-    
-    entry = users(user_name, first_name,password)
-    print (entry)
-    db.session.add(entry)
-    db.session.commit()
+    try:
+        print ('\n\n call here \n\n')
+        user_name = request.form["user_name"]
+        first_name = request.form["first_name"]
+        password = request.form["password"]
+        print (user_name,first_name,password)
+        
+        entry = users(user_name, first_name,password)
+        print (entry)
+        db.session.add(entry)
+        db.session.commit()
 
-    return render_template("index.html")
+        return render_template("index1.html")
+    except:
+        return 'Lol, Trying SQL Injection?'
 
 
-@app.route("/login")
+@app.route("/login1")
 def log_in():
-    return render_template("login.html")
+    return render_template("login1.html")
 
 
 @app.route("/login", methods=['POST','GET'])
@@ -66,6 +72,11 @@ def login():
     if request.method == "POST":
         user_name = request.form["user_name"]
         password = request.form["password"]
+
+        print(len(user_name))
+        if (len(user_name) == 0 and len(password)==0):
+            return "Lol, Are you trying SQL Injection?"
+
         print ('USERName----',user_name,password)
         query = """Select * from users where user_name= '%s'  """ %user_name
         print ('q', query)
@@ -77,7 +88,7 @@ def login():
             recordKeys.append(row[2])
         print (recordKeys)
         if len(recordKeys) == 0:
-            return 'fu'
+            return 'Wrong Password!'
         if recordKeys[0] == password:
             print ('Password matched!')
             session['user_name'] = user_name
@@ -86,16 +97,16 @@ def login():
             return redirect(url_for("task"))
             #return render_template('taskhome.html') #Page with two options, View and ADD the taks.
 
-        return render_template('login.html')    
-    return render_template('login.html')
+        return render_template('login1.html')    
+    return render_template('login1.html')
 
 @app.route('/task')   #Viewtask. add task.
 def task():
-    return render_template('task_page.html')
+    return render_template('task_page1.html')
 
 @app.route('/add-task-page')   #Adding the tasks page!
 def add_task():
-    return render_template('add_tasks_page.html')
+    return render_template('add_tasks_page1.html')
 
 @app.route('/adding_task', methods=['POST','GET'])   #Adding the tasks page!
 def adding_task():
@@ -109,7 +120,7 @@ def adding_task():
         querryy = """ %s """%queryy 
         cursor.execute(querryy)
         connection.commit()
-        return render_template('task_page.html')
+        return render_template('task_page1.html')
     else:
         return 'Something went wrong in adding task page!'
 
@@ -123,9 +134,35 @@ def view_tasks():
         if (len(records)== 0): #if no tasks found
             return "No tasks found!"
         connection.commit()
-        return 'Done'
+        return render_template('viewtasks1.html')
     else:
         return 'Something went wrong in VIEW tasks'
+
+@app.route('/delete-task-page')   #Adding the tasks page!
+def delete_task():
+    if "user_name" in session:
+        return render_template('delete_tasks_page1.html')
+    else:
+        return 'User not logged in'
+
+@app.route('/deleting_task', methods=['POST', 'GET'])   #Adding the tasks page!
+def deleting_task():
+    if "user_name" in session:
+        delete_description = str(request.form["task_description"])
+
+        query =  """ DELETE FROM tasks WHERE user_name='replace1' and task_description='replace2';   """ 
+        query = query.replace('replace1', session['user_name'])
+        query = query.replace('replace2',delete_description)
+
+        delete_ = cursor.execute(query)
+        connection.commit()
+        print(delete_)
+        return query
+        #return delete_
+
+    else:
+        return "user not logged in in deleting_task"
+
 
 @app.route("/helloworld")
 def helloworld():
@@ -134,7 +171,7 @@ def helloworld():
         test = session['user_name']
         return test
     else:
-        return render_template('login.html')
+        return render_template('login1.html')
 
 @app.route('/logout')
 def logout():

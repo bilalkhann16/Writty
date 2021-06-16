@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <title>LOGIN PAGE</title>
+  </head>
+  <body>
+      <form action="{{ url_for('deleting_task')}}" method="post">
+          <h5>Login Form</h5>
+          <div>
+              <input type="text" name="task_description" placeholder="Delete Task Description">
+          </div>
+
+          <div>
+              <button >Delete This Task</button>
+          </div>
+      </form>
+  </body>
+
+</html>
