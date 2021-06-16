@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <meta charset="utf-8">
+      <title>LOGIN PAGE</title>
+  </head>
+  <body>
+      <form action="{{ url_for('adding_task')}}" method="post">
+          <h5>Login Form</h5>
+          <div>
+              <input type="text" name="task_description" placeholder="Tasks Description">
+          </div>
+
+          <div>
+            <input type="text" name="tag" placeholder="Tag">
+        </div>
+
+        <div>
+            <input type="date" name="datee" placeholder="Due Date">
+        </div>
+          <div>
+              <button >Add Task</button>
+          </div>
+      </form>
+  </body>
+
+</html>
