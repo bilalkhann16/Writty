@@ -4,6 +4,7 @@ from flask import Flask, session
 from flask_sqlalchemy import SQLAlchemy
 from flask import Flask
 import psycopg2
+import hashlib, uuid
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import login_manager
 from flask import request, redirect, url_for, render_template
@@ -52,14 +53,20 @@ def personadd():
         password = request.form["password"]
         print (user_name,first_name,password)
         
+        # salt = uuid.uuid4().hex
+        # password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+        # print ('hashedpassword========== ',password)
+
+
         entry = users(user_name, first_name,password)
         print (entry)
         db.session.add(entry)
         db.session.commit()
 
         return render_template("index1.html")
-    except:
-        return 'Lol, Trying SQL Injection?'
+    except Exception as error:
+        return repr(error)
+        #return 'Lol, Trying SQL Injection?'
 
 
 @app.route("/login1")
@@ -74,10 +81,10 @@ def login():
         password = request.form["password"]
 
         print(len(user_name))
-        if (len(user_name) == 0 and len(password)==0):
+        if (len(user_name) == 0 or len(password)==0):
             return "Lol, Are you trying SQL Injection?"
 
-        print ('USERName----',user_name,password)
+        #print ('USERName----',user_name,password)
         query = """Select * from users where user_name= '%s'  """ %user_name
         print ('q', query)
         out = cursor.execute(query)
@@ -127,14 +134,18 @@ def adding_task():
 @app.route('/view-task', methods=['GET'])
 def view_tasks():
     if "user_name" in session: 
-        query = """ select task_description,date,tag from tasks where user_name= '%s';  """ %session['user_name']                            #query to view the all available tasks with no specific conditions!
+        query = """ select tag, date,task_description from tasks where user_name= '%s';  """ %session['user_name']                            #query to view the all available tasks with no specific conditions!
         cursor.execute(query)
         records = cursor.fetchall()
+        records = tuple(records)
+        headings = ("TAG", "DATE", "TASK")
+        data = records
+
         print(records)
         if (len(records)== 0): #if no tasks found
             return "No tasks found!"
         connection.commit()
-        return render_template('viewtasks1.html')
+        return render_template('viewtasks1.html', headings=headings, data=data)
     else:
         return 'Something went wrong in VIEW tasks'
 
@@ -156,8 +167,8 @@ def deleting_task():
 
         delete_ = cursor.execute(query)
         connection.commit()
-        print(delete_)
-        return query
+        #print(delete_)
+        return 'Task Deleted Successfully!'
         #return delete_
 
     else:
@@ -169,7 +180,15 @@ def helloworld():
     if "user_name" in session:
         print ("test", session)
         test = session['user_name']
-        return test
+
+        headings = ("Name", "Bilal", "salary")
+        data = (
+            ("ROlf","Software","45,000"),
+            ("ROlf1","Software1","46,000"),
+            ("ROlf2","Software2","48,000"),
+        )
+
+        return render_template('helloworld.html', headings=headings, data=data)
     else:
         return render_template('login1.html')
 

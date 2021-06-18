@@ -1,8 +1,20 @@
-/*
-Design by Free CSS Templates
-http://www.freecsstemplates.org
-Released for free under a Creative Commons Attribution 2.5 License
-*/
+.table__header{
+	text-align: left;
+	font-size: medium;
+}
+.table__cell{
+	padding: 8px;
+	font-size: medium;
+}
+.table{
+	border-spacing: 0;
+	margin: 1rem;
+	font-size: medium;
+}
+.table__row:nth-child(even){
+	background-color: #e5e5e5;
+	font-size: medium;
+}
 
 * {
 	margin: 0;
