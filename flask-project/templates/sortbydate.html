@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<title>Writty | A todo list webapp</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/mainpage.css') }}">
+</head>
+<body>
+<div id="breadcrumb">
+  <p><b>Sort By Date.</b> </p>
+</div>
+<div id="content">
+  <div id="sidebar">
+    <div id="logo">
+      <h1><a href="#">Writty.</a></h1>
+      <h2><a href="#">A TODO list webapp.</a></h2>
+    </div>
+    <div id="menu">
+      <ul>
+        <li class="active"><a href="#">Homepage</a></li>
+        <li><a href="/delete-task-page">Delete Task</a></li>
+        <li><a href="/logout">Logout</a></li>
+        <li><a href="#">Contribute to the project</a></li>
+      </ul>
+    </div>
+    
+  </div>
+  <div id="main">
+    <div id="welcome" class="post">
+      <div class="meta">
+      </div>
+      <div class="story">
+      </div>
+
+    <table class="tablee">
+      <tr class="table__header">
+          {% for header in headings  %}
+          <th table="table__cell">{{ header }}</th>
+          {% endfor %}
+      </tr>
+  
+      {% for row in data %}
+      <tr class="table__row">
+          {% for cell in row %}
+              <td class="table__cell">{{cell}}</td>
+          {% endfor %}
+      </tr>
+      {% endfor %}
+  
+   </table>
+
+
+    </div>
+
+    
+  </div>
+  <div id="extra" style="clear: both;"></div>
+</div>
+<div id="footer">
+  <p>Database Project</p>
+</div>
+</body>
+</html>

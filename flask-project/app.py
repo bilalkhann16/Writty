@@ -40,6 +40,23 @@ def index():
     return render_template('index1.html')
     #return '<a href="/signup"><button> Click here </button></a>'
 
+@app.route('/sortbydate',  methods=['POST','GET'])   #Adding the tasks page!
+def sortbydate():
+    if "user_name" in session:
+        query = """select tag, date,task_description from tasks where user_name='username' ORDER BY date ASC  """
+        query = query.replace('username', session['user_name'])
+        cursor.execute(query)
+        records = cursor.fetchall()
+        records = tuple(records)
+        headings = ("TAG", "DATE", "TASK")
+        data = records
+        print(records)
+        if (len(records)== 0): #if no tasks found
+            return "No tasks found!"
+        connection.commit()
+        return render_template('sortbydate.html', headings=headings, data=data)
+
+
 @app.route("/signup", methods=['POST','GET'])
 def addperson():
     return render_template("signup1.html")
@@ -51,11 +68,8 @@ def personadd():
         user_name = request.form["user_name"]
         first_name = request.form["first_name"]
         password = request.form["password"]
+        password = str(hash(password))  ##Hashing
         print (user_name,first_name,password)
-        
-        # salt = uuid.uuid4().hex
-        # password = hashlib.sha256(password.encode('utf-8')).hexdigest()
-        # print ('hashedpassword========== ',password)
 
 
         entry = users(user_name, first_name,password)
@@ -79,6 +93,7 @@ def login():
     if request.method == "POST":
         user_name = request.form["user_name"]
         password = request.form["password"]
+        password = str(hash(password))
 
         print(len(user_name))
         if (len(user_name) == 0 or len(password)==0):
@@ -95,7 +110,8 @@ def login():
             recordKeys.append(row[2])
         print (recordKeys)
         if len(recordKeys) == 0:
-            return 'Wrong Password!'
+            return 'Passowrd || Username Incorrect!'
+        print (recordKeys, password)
         if recordKeys[0] == password:
             print ('Password matched!')
             session['user_name'] = user_name
@@ -109,11 +125,14 @@ def login():
 
 @app.route('/task')   #Viewtask. add task.
 def task():
-    return render_template('task_page1.html')
+    if "user_name" in session:
+        return render_template('task_page1.html')
+    return 'User not logged in'
 
-@app.route('/add-task-page')   #Adding the tasks page!
+@app.route('/add-task-page',  methods=['POST','GET'])   #Adding the tasks page!
 def add_task():
-    return render_template('add_tasks_page1.html')
+    if "user_name" in session:
+        return render_template('add_tasks_page1.html')
 
 @app.route('/adding_task', methods=['POST','GET'])   #Adding the tasks page!
 def adding_task():
@@ -140,7 +159,6 @@ def view_tasks():
         records = tuple(records)
         headings = ("TAG", "DATE", "TASK")
         data = records
-
         print(records)
         if (len(records)== 0): #if no tasks found
             return "No tasks found!"
@@ -170,7 +188,6 @@ def deleting_task():
         #print(delete_)
         return 'Task Deleted Successfully!'
         #return delete_
-
     else:
         return "user not logged in in deleting_task"
 
@@ -180,15 +197,9 @@ def helloworld():
     if "user_name" in session:
         print ("test", session)
         test = session['user_name']
+        return test
 
-        headings = ("Name", "Bilal", "salary")
-        data = (
-            ("ROlf","Software","45,000"),
-            ("ROlf1","Software1","46,000"),
-            ("ROlf2","Software2","48,000"),
-        )
-
-        return render_template('helloworld.html', headings=headings, data=data)
+       # return render_template('helloworld.html', headings=headings, data=data)
     else:
         return render_template('login1.html')
 
@@ -200,4 +211,4 @@ def logout():
 
 if __name__ == "__main__":
     db.create_all()
-    app.run (debug=True)
+    app.run ()
